@@ -22,12 +22,12 @@ const Book: FC<BookInfo> = ({ volumeInfo }) => {
       <div className="card w-100 h-70 mb-3">
         <a href={infoLink} target="_blank" rel="noopener noreferrer">
           {imageLinks?.thumbnail ? (
-            <img className="card-img-top" src={imageLinks.thumbnail} alt={title} />
+            <img className="card-img-top" src={imageLinks.thumbnail} alt={title}/>
           ) : (
             <svg
               className="bd-placeholder-img card-img-top"
               width="100%"
-              height="200"
+              height="170"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
@@ -36,7 +36,7 @@ const Book: FC<BookInfo> = ({ volumeInfo }) => {
             >
               <title>Placeholder</title>
               <rect fill="#868e96" width="100%" height="100%" />
-              <text fill="#dee2e6" dy=".3em" x="23%" y="50%">
+              <text fill="#dee2e6" dy=".3em" x="50%" y="50%" textAnchor="middle">
                 Not Found
               </text>
             </svg>

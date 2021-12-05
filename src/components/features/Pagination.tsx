@@ -41,7 +41,7 @@ const Pagination = () => {
 
   return (
     <>
-      <nav aria-label="Page navigation" className="d-flex justify-content-center fixed-bottom">
+      <nav aria-label="Page navigation" className="d-flex justify-content-center">
         <ul className="pagination">
           <li className="page-item">
             <button className="page-link" aria-label="Previous" onClick={goPrevious} disabled={previousFlag}>

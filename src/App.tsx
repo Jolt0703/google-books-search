@@ -1,18 +1,19 @@
-import Appbar from "./components/layout/Appbar";
 import Home from "./components/layout/Home";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div className="App">
-        <Appbar />
-        <div className="container">
-          <Home />
-        </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route path=":search:page" element={<Home />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   );
 };

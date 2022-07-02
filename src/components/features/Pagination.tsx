@@ -1,4 +1,5 @@
 import React, { FC, MouseEvent } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchBooksData } from "./searchSlice";
 import { generateRange } from "./utils";
@@ -24,11 +25,17 @@ const Page: FC<PageProps> = ({ pageNumber, currentPage, onClick }) => {
 const Pagination = () => {
   const { currentPage, maxResults, totalItems, books, searchKey } = useAppSelector((state) => state.items);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   if (!books || books.length === 0) return <></>;
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     const targetPage = Number(e.currentTarget.value);
+    const params = createSearchParams({ search: searchKey, page: targetPage.toString() });
+    navigate({
+      pathname: "/",
+      search: `?${params}`,
+    });
     dispatch(fetchBooksData(searchKey, targetPage));
   };
 

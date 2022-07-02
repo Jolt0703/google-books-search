@@ -22,3 +22,22 @@ code {
   box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px);
 }
+
+@media (max-width: 500px) {
+  .search {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search > div {
+    min-width: 300px;
+  }
+
+  .search > div > input,
+  .search > div > input,
+  .search > div > button {
+    display: inline-block;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

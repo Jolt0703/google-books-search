@@ -26,11 +26,12 @@ const searchSlice = createSlice({
       state.startIndex = state.currentPage * state.maxResults;
     },
     getBooksDataFailure: () => initialState,
+    initializeData: () => initialState,
   },
 });
 
 export default searchSlice.reducer;
-export const { getBooksData, getBooksDataFailure } = searchSlice.actions;
+export const { getBooksData, getBooksDataFailure, initializeData } = searchSlice.actions;
 
 export const fetchBooksData =
   (

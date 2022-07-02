@@ -1,12 +1,21 @@
+import React from "react";
 import { useState, FormEvent, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks";
 import { fetchBooksData } from "./searchSlice";
 
-const Search = () => {
+const Search = React.memo(() => {
   const [text, setText] = useState("");
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const searchBooks = (searchKey: string) => dispatch(fetchBooksData(searchKey));
+  const searchBooks = (searchKey: string) => {
+    navigate({
+      pathname: "/",
+      search: `?search=${searchKey}`,
+    });
+    dispatch(fetchBooksData(searchKey));
+  };
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text !== "") searchBooks(text);
@@ -16,7 +25,7 @@ const Search = () => {
 
   return (
     <div>
-      <form className="form d-flex align-items-center justify-content-center p-4" onSubmit={onSubmit}>
+      <form className="form d-flex align-items-center justify-content-center p-4 search" onSubmit={onSubmit}>
         <div className="p-2 w-50">
           <input
             type="text"
@@ -35,6 +44,6 @@ const Search = () => {
       </form>
     </div>
   );
-};
+});
 
 export default Search;

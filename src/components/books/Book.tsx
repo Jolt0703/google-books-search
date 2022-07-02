@@ -1,3 +1,4 @@
+import React from "react";
 import { FC } from "react";
 
 export type BookInfo = {
@@ -14,7 +15,7 @@ type VolumeInfo = {
   infoLink: string;
 };
 
-const Book: FC<BookInfo> = ({ volumeInfo }) => {
+const Book: FC<BookInfo> = React.memo(({ volumeInfo }) => {
   const { title, authors, imageLinks, infoLink } = volumeInfo;
 
   return (
@@ -22,7 +23,7 @@ const Book: FC<BookInfo> = ({ volumeInfo }) => {
       <div className="card w-100 h-70 mb-3">
         <a href={infoLink} target="_blank" rel="noopener noreferrer">
           {imageLinks?.thumbnail ? (
-            <img className="card-img-top" src={imageLinks.thumbnail} alt={title}/>
+            <img className="card-img-top" src={imageLinks.thumbnail} alt={title} />
           ) : (
             <svg
               className="bd-placeholder-img card-img-top"
@@ -54,6 +55,6 @@ const Book: FC<BookInfo> = ({ volumeInfo }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Book;

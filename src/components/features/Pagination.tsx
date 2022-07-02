@@ -1,7 +1,6 @@
 import React, { FC, MouseEvent } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { fetchBooksData } from "./searchSlice";
+import { useAppSelector } from "../../hooks";
 import { generateRange } from "./utils";
 
 type PageProps = {
@@ -10,7 +9,7 @@ type PageProps = {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Page: FC<PageProps> = ({ pageNumber, currentPage, onClick }) => {
+const Page: FC<PageProps> = React.memo(({ pageNumber, currentPage, onClick }) => {
   return (
     <>
       <li className={pageNumber === currentPage ? "page-item active" : "page-item"}>
@@ -20,11 +19,10 @@ const Page: FC<PageProps> = ({ pageNumber, currentPage, onClick }) => {
       </li>
     </>
   );
-};
+});
 
-const Pagination = () => {
+const Pagination = React.memo(() => {
   const { currentPage, maxResults, totalItems, books, searchKey } = useAppSelector((state) => state.items);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   if (!books || books.length === 0) return <></>;
@@ -36,11 +34,25 @@ const Pagination = () => {
       pathname: "/",
       search: `?${params}`,
     });
-    dispatch(fetchBooksData(searchKey, targetPage));
   };
 
-  const goNext = () => dispatch(fetchBooksData(searchKey, currentPage + 1));
-  const goPrevious = () => dispatch(fetchBooksData(searchKey, currentPage - 1));
+  const goNext = () => {
+    const targetPage = currentPage + 1;
+    const params = createSearchParams({ search: searchKey, page: targetPage.toString() });
+    navigate({
+      pathname: "/",
+      search: `?${params}`,
+    });
+  };
+
+  const goPrevious = () => {
+    const targetPage = currentPage - 1;
+    const params = createSearchParams({ search: searchKey, page: targetPage.toString() });
+    navigate({
+      pathname: "/",
+      search: `?${params}`,
+    });
+  };
 
   const lastPage = Math.floor(totalItems / maxResults);
   let nextFlag = currentPage === lastPage ? true : false;
@@ -71,6 +83,6 @@ const Pagination = () => {
       </nav>
     </>
   );
-};
+});
 
 export default Pagination;

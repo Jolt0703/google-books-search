@@ -1,12 +1,9 @@
 import React from "react";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks";
-import { fetchBooksData } from "./searchSlice";
 
 const Search = React.memo(() => {
   const [text, setText] = useState("");
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const searchBooks = (searchKey: string) => {
@@ -14,7 +11,6 @@ const Search = React.memo(() => {
       pathname: "/",
       search: `?search=${searchKey}`,
     });
-    dispatch(fetchBooksData(searchKey));
   };
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

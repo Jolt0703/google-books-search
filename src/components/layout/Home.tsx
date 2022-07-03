@@ -6,10 +6,11 @@ import Pagination from "../features/Pagination";
 import Appbar from "./Appbar";
 import { fetchBooksData, initializeData } from "../features/searchSlice";
 import { useSearchParams } from "react-router-dom";
+import Loading from "./Loading";
 
 const Home = React.memo(() => {
   const items = useAppSelector((state) => state.items);
-  const { books } = items;
+  const { books, isLoading } = items;
 
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
@@ -18,9 +19,9 @@ const Home = React.memo(() => {
 
   const fetchData = React.useCallback(async () => {
     if (search && page) {
-      dispatch(fetchBooksData(search, Number.parseInt(page)));
+      dispatch(fetchBooksData({ searchKey: search, currentPage: Number.parseInt(page) }));
     } else if (search) {
-      dispatch(fetchBooksData(search));
+      dispatch(fetchBooksData({ searchKey: search }));
     } else {
       dispatch(initializeData());
     }
@@ -35,7 +36,7 @@ const Home = React.memo(() => {
       <Appbar />
       <div className="container">
         <Search />
-        <Books books={books} />
+        {isLoading ? <Loading /> : <Books books={books} />}
         <Pagination />
       </div>
     </div>

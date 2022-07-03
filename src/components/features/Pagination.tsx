@@ -11,18 +11,18 @@ type PageProps = {
 
 const Page: FC<PageProps> = React.memo(({ pageNumber, currentPage, onClick }) => {
   return (
-    <>
+    <React.Fragment>
       <li className={pageNumber === currentPage ? "page-item active" : "page-item"}>
         <button className="page-link" onClick={onClick} value={pageNumber}>
           {pageNumber}
         </button>
       </li>
-    </>
+    </React.Fragment>
   );
 });
 
 const Pagination = React.memo(() => {
-  const { currentPage, maxResults, totalItems, books, searchKey } = useAppSelector((state) => state.items);
+  const { currentPage, maxResults, totalItems, books, searchKey, isLoading } = useAppSelector((state) => state.items);
   const navigate = useNavigate();
 
   if (!books || books.length === 0) return <></>;
@@ -58,8 +58,10 @@ const Pagination = React.memo(() => {
   let nextFlag = currentPage === lastPage ? true : false;
   let previousFlag = currentPage === 1 ? true : false;
 
+  if (isLoading) return <></>;
+
   return (
-    <>
+    <React.Fragment>
       <nav aria-label="Page navigation" className="d-flex justify-content-center">
         <ul className="pagination">
           <li className="page-item">
@@ -81,7 +83,7 @@ const Pagination = React.memo(() => {
           </li>
         </ul>
       </nav>
-    </>
+    </React.Fragment>
   );
 });
 

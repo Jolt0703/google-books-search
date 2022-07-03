@@ -20,7 +20,7 @@ const Search = React.memo(() => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setText(e.target.value);
 
   return (
-    <div>
+    <React.Fragment>
       <form className="form d-flex align-items-center justify-content-center p-4 search" onSubmit={onSubmit}>
         <div className="p-2 w-50">
           <input
@@ -38,7 +38,7 @@ const Search = React.memo(() => {
           </button>
         </div>
       </form>
-    </div>
+    </React.Fragment>
   );
 });
 

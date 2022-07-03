@@ -11,25 +11,27 @@ import Loading from "./Loading";
 const Home = React.memo(() => {
   const items = useAppSelector((state) => state.items);
   const { books, isLoading } = items;
-
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
-  const page = searchParams.get("page");
 
-  const fetchData = React.useCallback(async () => {
-    if (search && page) {
-      dispatch(fetchBooksData({ searchKey: search, currentPage: Number.parseInt(page) }));
-    } else if (search) {
-      dispatch(fetchBooksData({ searchKey: search }));
-    } else {
-      dispatch(initializeData());
-    }
-  }, [search, page, dispatch]);
+  const fetchData = React.useCallback(
+    (search: string | null, page: string | null) => {
+      if (search && page) {
+        dispatch(fetchBooksData({ searchKey: search, currentPage: Number.parseInt(page) }));
+      } else if (search) {
+        dispatch(fetchBooksData({ searchKey: search }));
+      } else {
+        dispatch(initializeData());
+      }
+    },
+    [dispatch]
+  );
 
   React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    fetchData(search, page);
+  }, [fetchData, searchParams]);
 
   return (
     <div className="App">

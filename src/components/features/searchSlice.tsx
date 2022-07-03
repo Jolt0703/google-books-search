@@ -39,9 +39,9 @@ const searchSlice = createSlice({
     builder.addCase(fetchBooksData.rejected, (state, action) => {
       if (action.payload) {
         state.searchKey = action.payload.searchKey;
+        state.currentPage = action.payload.currentPage ? action.payload.currentPage : initialState.currentPage;
       }
       state.books = initialState.books;
-      state.currentPage = initialState.currentPage;
       state.startIndex = initialState.startIndex;
       state.maxResults = initialState.maxResults;
       state.totalItems = initialState.totalItems;
@@ -79,7 +79,7 @@ export const fetchBooksData = createAsyncThunk<any, SearchParams, { rejectValue:
       res.data.currentPage = currentPage;
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue({ searchKey });
+      return thunkAPI.rejectWithValue({ searchKey, currentPage });
     }
   }
 );

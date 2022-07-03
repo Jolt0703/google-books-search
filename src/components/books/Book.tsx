@@ -1,5 +1,4 @@
 import React from "react";
-import { FC } from "react";
 
 export type BookInfo = {
   id: string;
@@ -15,9 +14,8 @@ type VolumeInfo = {
   infoLink: string;
 };
 
-const Book: FC<BookInfo> = React.memo(({ volumeInfo }) => {
+const Book: React.FC<BookInfo> = React.memo(({ volumeInfo }) => {
   const { title, authors, imageLinks, infoLink } = volumeInfo;
-
   return (
     <React.Fragment>
       <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 d-flex align-items-stretch">

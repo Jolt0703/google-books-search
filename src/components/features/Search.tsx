@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Search = React.memo(() => {
-  const [text, setText] = useState("");
+  const [text, setText] = React.useState("");
   const navigate = useNavigate();
 
   const searchBooks = (searchKey: string) => {
@@ -12,6 +12,7 @@ const Search = React.memo(() => {
       search: `?search=${searchKey}`,
     });
   };
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text !== "") searchBooks(text);

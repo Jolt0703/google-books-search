@@ -1,5 +1,4 @@
 import React from "react";
-import { FC } from "react";
 import { useAppSelector } from "../../hooks";
 import Book, { BookInfo } from "./Book";
 
@@ -7,9 +6,15 @@ export type BooksProps = {
   books?: BookInfo[];
 };
 
-const Books: FC<BooksProps> = React.memo(({ books }) => {
-  const { isError, searchKey } = useAppSelector((state) => state.items);
-  if (isError) return <BooksNotFound searchKey={searchKey!!} />;
+const Books: React.FC<BooksProps> = React.memo(({ books }) => {
+  const { isError, searchKey, currentPage } = useAppSelector((state) => state.items);
+  if (isError) {
+    return currentPage > 1 ? (
+      <BooksNotFound searchKey={searchKey!!} page={currentPage} />
+    ) : (
+      <BooksNotFound searchKey={searchKey!!} />
+    );
+  }
   return (
     <React.Fragment>
       <div className="d-flex justify-content-center align-items-center">
@@ -23,14 +28,20 @@ const Books: FC<BooksProps> = React.memo(({ books }) => {
 
 type BooksNotFoundProps = {
   searchKey: string;
+  page?: number;
 };
-const BooksNotFound: FC<BooksNotFoundProps> = React.memo(({ searchKey }) => {
+
+const BooksNotFound: React.FC<BooksNotFoundProps> = React.memo(({ searchKey, page }) => {
   return (
     <React.Fragment>
       <div className="d-flex align-items-center justify-content-center p-4">
         <div className="row w-75">
           <div className="col-12">
-            <div className="h6 text-center">{`「${searchKey}」の検索結果は見つかりませんでした。`}</div>
+            {page ? (
+              <div className="h6 text-center">{`「${searchKey}」の${page}ページ目は見つかりませんでした。`}</div>
+            ) : (
+              <div className="h6 text-center">{`「${searchKey}」の検索結果は見つかりませんでした。`}</div>
+            )}
           </div>
         </div>
       </div>

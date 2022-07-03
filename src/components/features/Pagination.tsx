@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { generateRange } from "./utils";
@@ -9,7 +9,7 @@ type PageProps = {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Page: FC<PageProps> = React.memo(({ pageNumber, currentPage, onClick }) => {
+const Page: React.FC<PageProps> = React.memo(({ pageNumber, currentPage, onClick }) => {
   return (
     <React.Fragment>
       <li className={pageNumber === currentPage ? "page-item active" : "page-item"}>
@@ -25,7 +25,7 @@ const Pagination = React.memo(() => {
   const { currentPage, maxResults, totalItems, books, searchKey, isLoading } = useAppSelector((state) => state.items);
   const navigate = useNavigate();
 
-  if (!books || books.length === 0) return <></>;
+  if (isLoading || !books || books.length === 0) return <></>;
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     const targetPage = Number(e.currentTarget.value);
@@ -57,8 +57,6 @@ const Pagination = React.memo(() => {
   const lastPage = Math.floor(totalItems / maxResults);
   let nextFlag = currentPage === lastPage ? true : false;
   let previousFlag = currentPage === 1 ? true : false;
-
-  if (isLoading) return <></>;
 
   return (
     <React.Fragment>

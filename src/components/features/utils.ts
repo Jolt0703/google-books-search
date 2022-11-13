@@ -1,8 +1,7 @@
 const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_v, k) => k + start);
 
 export const generateRange = (currentPage: number, lastPage: number) => {
-  let startPage = 1;
-  let endPage = lastPage;
+  let [startPage, endPage] = [1, lastPage];
   if (lastPage - currentPage > 10) {
     startPage = currentPage > 5 ? currentPage - 3 : 1;
     endPage = currentPage > 5 ? currentPage + 3 : 7;

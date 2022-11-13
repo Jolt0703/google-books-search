@@ -67,13 +67,11 @@ export const fetchBooksData = createAsyncThunk<any, SearchParams, { rejectValue:
       const startIndex = (currentPage - 1) * maxResults;
       const params = {
         q: searchKey,
-        maxResults: maxResults,
-        startIndex: startIndex,
+        maxResults,
+        startIndex,
         key: API_KEY,
       };
-      const res = await axios.get(GOOGLE_BOOKS_ENDPOINT, {
-        params: params,
-      });
+      const res = await axios.get(GOOGLE_BOOKS_ENDPOINT, { params });
       if (!res.data.items) throw new Error("No items found");
       res.data.searchKey = searchKey;
       res.data.currentPage = currentPage;

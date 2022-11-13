@@ -55,8 +55,8 @@ const Pagination = React.memo(() => {
   };
 
   const lastPage = Math.floor(totalItems / maxResults);
-  let nextFlag = currentPage === lastPage ? true : false;
-  let previousFlag = currentPage === 1 ? true : false;
+  let nextFlag = currentPage === lastPage;
+  let previousFlag = currentPage === 1;
 
   return (
     <React.Fragment>
@@ -65,7 +65,6 @@ const Pagination = React.memo(() => {
           <li className="page-item">
             <button className="page-link" aria-label="Previous" onClick={goPrevious} disabled={previousFlag}>
               <span aria-hidden="true">&laquo;</span>
-              <span className="sr-only">Previous</span>
             </button>
           </li>
 
@@ -76,7 +75,6 @@ const Pagination = React.memo(() => {
           <li className="page-item">
             <button className="page-link" aria-label="Next" onClick={goNext} disabled={nextFlag}>
               <span aria-hidden="true">&raquo;</span>
-              <span className="sr-only">Next</span>
             </button>
           </li>
         </ul>
